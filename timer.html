@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+ <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	
+	<style>
+	.time-header span,.time-header-sec span {
+	    line-height: 43px;
+		font-size: 24px;
+		color: #646464;
+	}
+	.time-header span:nth-child(4),.time-header-sec span:nth-child(4) {
+	    line-height: 30px;
+		font-size: 13px;
+		padding-bottom: 5px;
+		position: relative;
+		color: #646464;
+		top: -3px;
+	}
+	.time-header span:nth-child(1) { 
+		color: #2eb1e7; 
+	}
+	.time-header span:nth-child(3) { 
+		color: #646464; 
+	}
+	.time-header-sec span:nth-child(1) { 
+		color: #646464; 
+	}
+	.time-header-sec span:nth-child(3) { 
+		color: #2eb1e7; 
+	}
+	* {
+		-webkit-touch-callout:none;
+		-webkit-user-select:none;
+		-khtml-user-select:none;
+		-moz-user-select:none;
+		-ms-user-select:none;
+		user-select:none;
+	}
+	button.small {
+    padding: 8px 20px;
+    font-size: 14px;
+	}
+	button.big {
+		background-color: #2eb1e7;
+		height: 43px;
+		width:100%;
+		margin: 0px;
+		margin-top:10px;
+	}
+	button.round {
+		border-radius: 4px;
+	}
+
+	button {
+		background-color: #2eb1e7;
+		border: 1px solid #2eb1e7;
+		color: #ffffff;
+		display: inline-block;
+		font-size: 14px;
+		position: relative;
+		text-decoration: none;
+		outline: none;
+		padding: 10px 20px;
+		margin: 5px;
+	}
+	.button-day-am button:nth-child(1){
+			background-color: #2eb1e7;
+		color: #ffffff;
+
+	}
+	.button-day-am button:nth-child(2){
+			background-color: transparent;
+		color: #2eb1e7;
+
+	}
+	.button-day-pm button:nth-child(1){
+			background-color: transparent;
+		color: #2eb1e7;
+
+	}
+	.button-day-pm button:nth-child(2){
+			background-color: #2eb1e7;
+		color: #ffffff;
+
+	}
+	
+	#bg{ display: none; position: absolute; top: 0%; left: 0%; width: 100%; height: 100%; background-color: black; z-index:1001; -moz-opacity: 0.7; opacity:.70; filter: alpha(opacity=70);} 
+#show {
+    display: none; 
+    position: absolute;
+    top: 20%;
+    left: 10%;
+    width: 80%;
+    background-color: white;
+    z-index: 1002;
+    overflow: hidden;
+}
+	</style>
+	
+	</head> 
+ <body style="margin:0px"> 
+ 	
+	<div id="show"> 
+	<div id="header-title" class="time-header" style="text-align: center;background-color: #dfdfdf;height: 43px;">   
+		<span id="title-hour" >12</span>
+		<span>:</span>
+		<span  id="title-second">00</span>
+		<span  id="title-day">上午</span>
+	</div> 
+  <div style="margin:12px;position: relative;text-align:center" onselectstart="return false;"> 
+  <div style="position: relative;display: inline-block;"> 
+   <svg  id="svg-time-hour" xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="z-index:99;position: absolute;top: 4px;left: -4px; font-color:#dfdfdf;font-size:16px"> 
+   	<text id="text-3" x="182" y="100" fill="#2eb1e7">3</text>
+    <text id="text-2"x="171" y="59"	fill="#2eb1e7">2</text>
+    <text id="text-1"x="141" y="29"	fill="#2eb1e7">1</text>
+    <text id="text-12"x="96" y="18"	fill="#2eb1e7">12</text>
+    <text id="text-11"x="56" y="29.5"	fill="#2eb1e7">11</text>
+    <text id="text-10"x="25" y="60"	 fill="#2eb1e7">10</text>
+    <text id="text-9"x="18" y="100"	fill="#2eb1e7">9</text>
+    <text id="text-8"x="29" y="141"	fill="#2eb1e7">8</text>
+    <text id="text-7"x="59" y="171"	fill="#2eb1e7">7</text>
+    <text id="text-6"x="100" y="182" fill="#2eb1e7">6</text>
+    <text id="text-5"x="141" y="171" fill="#2eb1e7">5</text> 
+    <text id="text-4"x="171" y="141" fill="#2eb1e7">4</text>
+   </svg>
+	<svg  id="svg-time-second" xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="z-index:99;position: absolute;top: 4px;left: -4px; font-color:#dfdfdf;font-size:16px"> 
+		<text id="text-3" x="179" y="100" fill="#2eb1e7">15</text>
+		<text id="text-2" x="168" y="59" fill="#2eb1e7">10</text>
+		<text id="text-1" x="141" y="29" fill="#2eb1e7">5</text>
+		<text id="text-12" x="96" y="18" fill="#2eb1e7">00</text>
+		<text id="text-11" x="56" y="30" fill="#2eb1e7">55</text>
+		<text id="text-10" x="25" y="60" fill="#2eb1e7">50</text>
+		<text id="text-9" x="15" y="100" fill="#2eb1e7">45</text>
+		<text id="text-8" x="26" y="141" fill="#2eb1e7">40</text>
+		<text id="text-7" x="56" y="172" fill="#2eb1e7">35</text>
+		<text id="text-6" x="97" y="182" fill="#2eb1e7">30</text>
+		<text id="text-5" x="138" y="172" fill="#2eb1e7">25</text> 
+		<text id="text-4" x="168" y="141" fill="#2eb1e7">20</text>
+   </svg>   
+   <svg xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="  -webkit-tap-highlight-color:rgba(0,0,0,0);transform:rotate(15deg);overflow: hidden; position: absolute;top: -0px;left: -0px;z-index:100"> 
+    <circle cx="100" cy="100" r="100" stroke="#2eb1e7" stroke-width="1" fill="transparent" /> 
+    <path fill="transparent" onclick="timeChange(3)" d="M100,100L200,100A100,100,0,0,0,186.6,50Z" /> 
+    <path fill="transparent" onclick="timeChange(2)" d="M100,100L186.6,50A100,100,0,0,0,150,13.4Z" /> 
+    <path fill="transparent" onclick="timeChange(1)" d="M100,100L150,13.4A100,100,0,0,0,100,0Z" /> 
+    <path fill="transparent" onclick="timeChange(12)" d="M100,100L100,0A100,100,0,0,0,50,13.4Z" /> 
+    <path fill="transparent" onclick="timeChange(11)" d="M100,100L50,13.4A100,100,0,0,0,13.4,50Z" /> 
+    <path fill="transparent" onclick="timeChange(10)" d="M100,100L13.4,50A100,100,0,0,0,0,100Z" /> 
+    <path fill="transparent" onclick="timeChange(9)" d="M100,100L0,100A100,100,0,0,0,13.4,150Z" /> 
+    <path fill="transparent" onclick="timeChange(8)" d="M100,100L13.4,150A100,100,0,0,0,50,186.6Z" /> 
+    <path fill="transparent" onclick="timeChange(7)" d="M100,100L50,186.6A100,100,0,0,0,100,200Z" /> 
+    <path fill="transparent" onclick="timeChange(6)" d="M100,100L100,200A100,100,0,0,0,150,186.6Z" /> 
+    <path fill="transparent" onclick="timeChange(5)" d="M100,100L150,186.6A100,100,0,0,0,186.6,150Z" /> 
+    <path fill="transparent" onclick="timeChange(4)" d="M100,100L186.6,150A100,100,0,0,0,200,100Z" /> 
+   </svg> 
+   <svg  id="svg-time-arrow" xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="transform:rotate(-0deg); transition:transform .2s;
+overflow: hidden;"> 
+    <circle cx="100" cy="18" r="12.5" stroke="#2eb1e7" stroke-width="1" fill="#2eb1e7" /> 
+    <circle cx="100" cy="100" r="2" stroke="#2eb1e7" stroke-width="1" fill="transparent" /> 
+    <line x1="100" y1="100" x2="100" y2="10" style="stroke:#2eb1e7"> 
+    </line> 
+   </svg> 
+  </div>
+  </div>  
+  <div id="button-day" class="button-day-am" style="text-align: center;height: 60px;">   
+	 <button class="small round" style="margin: 10px 30px 10px 0px" onclick=changeDay("am") >上午 </button>
+	 <button class="small round"  style="margin: 10px 0px 10px 30px" onclick=changeDay("pm")>下午 </button>
+	</div> 
+  <button class="big" onclick=complete()>   
+	 完成
+	</button> 
+	
+
+		
+	</div> 
+<div id="bg"></div> 
+ <button class="big" onclick=show()>   
+	 test
+	</button> 
+<a href="#" data-role="button" id="yesNextBtn" style="display: block;font-size:16px;">同意</a> 
+	
+ <script  type="text/javascript">
+	//完成标志 0 未选择 1 小时已选择 
+	var flag=0;
+	//获取只针对象
+ 	var svgArrow =document.getElementById("svg-time-arrow")
+	//获取时间对象
+	var titleHour = document.getElementById("title-hour");
+	var titleSec = document.getElementById("title-second");
+	//时间
+	var hour=1;
+	var second=00;
+	function timeChange(index){
+		//计算指针需要转动的角度
+		var deg= index*30;
+		//转动指针
+		svgArrow.style.transform = "rotate("+deg+"deg)";
+		//选中变色处理
+		textColor(index);
+		//修改时间
+		if(flag==0){
+			hour=index;
+			titleHour.innerText=index;
+		}else{
+			second=(index*5==60)?"00":index*5;
+			titleSec.innerText=(second==60)?"00":second;
+		}
+		
+	}
+	//初始化index数值为12
+	timeChange(12);
+	function textColor(index){
+	var svgDoc;
+		if(flag==0){
+			svgDoc = document.getElementById("svg-time-hour")
+		}else{
+			svgDoc = document.getElementById("svg-time-second")
+		}
+		//未选中均为蓝色
+		for(i=1;i<=12;i++){
+			svgDoc.getElementById("text-"+i).setAttribute("fill","#2eb1e7");
+		}
+		var text = svgDoc.getElementById("text-"+index);
+		//选中 设置为白色
+		text.setAttribute("fill","#FFF");		
+	}	
+	var day="am"
+	//上午下午切换
+	function changeDay(d){
+		day=d;
+		var  titleDay = document.getElementById("title-day");
+		var  buttonDay = document.getElementById("button-day");
+		if(d=="am")	{		
+			buttonDay.setAttribute("class","button-day-am");
+			titleDay.innerText="上午";
+		}else{		
+			buttonDay.setAttribute("class","button-day-pm");
+			titleDay.innerText="下午";	}
+
+	}
+	
+	var svgDocSecond = document.getElementById("svg-time-second")
+	var svgDocHour = document.getElementById("svg-time-hour")
+		svgDocSecond.style.display="none" 
+ 	function complete(){
+	if(flag==0){
+		flag=1;
+		//表盘替换为分钟
+		svgDocHour.style.display="none" ;
+		svgDocSecond.style.display="block" ;	
+		//title显示蓝色变换
+		var headerTitle = document.getElementById("header-title");
+		headerTitle.setAttribute("class","time-header-sec")
+		//重设分钟
+		timeChange(12);
+		return;
+	}
+	//设置结束返回结果
+	if(flag==1){
+		alert(hour+":"+second+"-"+day);
+		hidden();
+	}
+
+	}
+	
+	
+	function show(){
+	document.getElementById("bg").style.display ="block"; 
+	document.getElementById("show").style.display ="block"; 
+	}
+	function hidden(){
+	document.getElementById("bg").style.display ="none"; 
+	document.getElementById("show").style.display ="none"; 
+	}
+	 
+ </script>
+ </body>
+</html>

@@ -208,18 +208,18 @@
      </svg> 
      <svg xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="  -webkit-tap-highlight-color:rgba(0,0,0,0);transform:rotate(15deg);overflow: hidden; position: absolute;top: -0px;left: -0px;z-index:100"> 
       <circle cx="100" cy="100" r="100" stroke="#2eb1e7" stroke-width="1" fill="transparent" /> 
-      <path fill="transparent" onclick="timeChange(3)" d="M100,100L200,100A100,100,0,0,0,186.6,50Z" /> 
-      <path fill="transparent" onclick="timeChange(2)" d="M100,100L186.6,50A100,100,0,0,0,150,13.4Z" /> 
-      <path fill="transparent" onclick="timeChange(1)" d="M100,100L150,13.4A100,100,0,0,0,100,0Z" /> 
-      <path fill="transparent" onclick="timeChange(12)" d="M100,100L100,0A100,100,0,0,0,50,13.4Z" /> 
-      <path fill="transparent" onclick="timeChange(11)" d="M100,100L50,13.4A100,100,0,0,0,13.4,50Z" /> 
-      <path fill="transparent" onclick="timeChange(10)" d="M100,100L13.4,50A100,100,0,0,0,0,100Z" /> 
-      <path fill="transparent" onclick="timeChange(9)" d="M100,100L0,100A100,100,0,0,0,13.4,150Z" /> 
-      <path fill="transparent" onclick="timeChange(8)" d="M100,100L13.4,150A100,100,0,0,0,50,186.6Z" /> 
-      <path fill="transparent" onclick="timeChange(7)" d="M100,100L50,186.6A100,100,0,0,0,100,200Z" /> 
-      <path fill="transparent" onclick="timeChange(6)" d="M100,100L100,200A100,100,0,0,0,150,186.6Z" /> 
-      <path fill="transparent" onclick="timeChange(5)" d="M100,100L150,186.6A100,100,0,0,0,186.6,150Z" /> 
-      <path fill="transparent" onclick="timeChange(4)" d="M100,100L186.6,150A100,100,0,0,0,200,100Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(3)" d="M100,100L200,100A100,100,0,0,0,186.6,50Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(2)" d="M100,100L186.6,50A100,100,0,0,0,150,13.4Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(1)" d="M100,100L150,13.4A100,100,0,0,0,100,0Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(12)" d="M100,100L100,0A100,100,0,0,0,50,13.4Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(11)" d="M100,100L50,13.4A100,100,0,0,0,13.4,50Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(10)" d="M100,100L13.4,50A100,100,0,0,0,0,100Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(9)" d="M100,100L0,100A100,100,0,0,0,13.4,150Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(8)" d="M100,100L13.4,150A100,100,0,0,0,50,186.6Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(7)" d="M100,100L50,186.6A100,100,0,0,0,100,200Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(6)" d="M100,100L100,200A100,100,0,0,0,150,186.6Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(5)" d="M100,100L150,186.6A100,100,0,0,0,186.6,150Z" /> 
+      <path fill="transparent" onclick="TimeSelecter.timeChange(4)" d="M100,100L186.6,150A100,100,0,0,0,200,100Z" /> 
      </svg> 
      <svg id="svg-time-arrow" xmlns="http://www.w3.org/2000/svg" height="200" version="1.1" width="200" style="transform:rotate(-0deg); transition:transform .2s;
 overflow: hidden;"> 
@@ -231,106 +231,142 @@ overflow: hidden;">
     </div> 
    </div> 
    <div id="button-day" class="button-day-am" style="text-align: center;height: 60px;"> 
-    <button class="small round" style="margin: 10px 30px 10px 0px" onclick="changeDay(&quot;am&quot;)">上午 </button> 
-    <button class="small round" style="margin: 10px 0px 10px 30px" onclick="changeDay(&quot;pm&quot;)">下午 </button> 
+    <button class="small round" style="margin: 10px 30px 10px 0px" onclick="TimeSelecter.changeDay(&quot;am&quot;)">上午 </button> 
+    <button class="small round" style="margin: 10px 0px 10px 30px" onclick="TimeSelecter.changeDay(&quot;pm&quot;)">下午 </button> 
    </div> 
-   <button class="big" onclick="complete()"> 完成 </button> 
+   <button class="big" onclick="TimeSelecter.complete()"> 完成 </button> 
   </div> 
   <div id="bg"></div> 
-  <button class="big" onclick="show()"> test </button> 
+  <button class="big" onclick="TimeSelecter.init(callback)"> test </button> 
   <script type="text/javascript">
-	//完成标志 0 未选择 1 小时已选择 
-	var flag=0;
-	//获取只针对象
- 	var svgArrow =document.getElementById("svg-time-arrow");
-	//获取时间对象
-	var titleHour = document.getElementById("title-hour");
-	var titleSec = document.getElementById("title-second");
-	//时间
-	var hour=1;
-	var second=00;
-	function timeChange(index){
-		//计算指针需要转动的角度
-		var deg= index*30;
-		//转动指针
-		svgArrow.style.transform = "rotate("+deg+"deg)";
-		//选中变色处理
-		textColor(index);
-		//修改时间
-		if(flag==0){
-			hour=index;
-			titleHour.innerText=index;
-		}else{
-			second=(index*5==60)?"00":index*5;
-			titleSec.innerText=(second==60)?"00":second;
+  var TimeSelecter = TimeSelecter || {};
+(function(exports) {
+	'use strict';
+		//完成标志 0 未选择 1 小时已选择 
+		var flag=0;
+		//获取只针对象
+		var svgArrow =document.getElementById("svg-time-arrow");
+		//获取时间对象
+		var titleHour = document.getElementById("title-hour");
+		var titleSec = document.getElementById("title-second");
+		//时间
+		var hour=1;
+		var second="00";		
+		var day="am"
+		var textColor = function (index){
+		var svgDoc;
+			if(flag==0){
+				svgDoc = document.getElementById("svg-time-hour");
+			}else{
+				svgDoc = document.getElementById("svg-time-second");
+			}
+			//未选中均为蓝色
+			for(var i=1;i<=12;i++){
+				svgDoc.getElementById("text-"+i).setAttribute("fill","#2eb1e7");
+			}
+			var text = svgDoc.getElementById("text-"+index);
+			//选中 设置为白色
+			text.setAttribute("fill","#FFF");		
+		}	
+		var timeChange = function (index){
+			//计算指针需要转动的角度
+			var deg= index*30;
+			//转动指针
+			svgArrow.style.transform = "rotate("+deg+"deg)";
+			//选中变色处理
+			textColor(index);
+			//修改时间
+			if(flag==0){
+				hour=index;
+				titleHour.innerText=index;
+			}else{
+				second=(index*5==60)?"00":index*5;
+				titleSec.innerText=(second==60)?"00":second;
+			}
+			
+		}
+		var timeChangeSec = function (index){
+			//计算指针需要转动的角度
+			var deg= index*30;
+			//转动指针
+			svgArrow.style.transform = "rotate("+deg+"deg)";
+			//选中变色处理
+			textColor(index);
+			//修改时间		 
+				second=(index*5==60)?"00":index*5;
+				titleSec.innerText=(second==60)?"00":second;
+			
 		}
 		
-	}
-	//初始化index数值为12
-	timeChange(12);
-	function textColor(index){
-	var svgDoc;
+		//上午下午切换
+		var changeDay = function(d){
+			day=d;
+			var  titleDay = document.getElementById("title-day");
+			var  buttonDay = document.getElementById("button-day");
+			if(d=="am")	{		
+				buttonDay.setAttribute("class","button-day-am");
+				titleDay.innerText="上午";
+			}else{		
+				buttonDay.setAttribute("class","button-day-pm");
+				titleDay.innerText="下午";	}
+		}
+		
+		var svgDocSecond = document.getElementById("svg-time-second");
+		var svgDocHour = document.getElementById("svg-time-hour");
+			svgDocSecond.style.display="none" ;
+		var complete = function (){
 		if(flag==0){
-			svgDoc = document.getElementById("svg-time-hour");
-		}else{
-			svgDoc = document.getElementById("svg-time-second");
+			flag=1;
+			//表盘替换为分钟
+			svgDocHour.style.display="none" ;
+			svgDocSecond.style.display="block" ;	
+			//title显示蓝色变换
+			var headerTitle = document.getElementById("header-title");
+			headerTitle.setAttribute("class","time-header-sec");
+			//重设分钟
+			timeChangeSec(12);
+			return;
 		}
-		//未选中均为蓝色
-		for(i=1;i<=12;i++){
-			svgDoc.getElementById("text-"+i).setAttribute("fill","#2eb1e7");
+		//设置结束返回结果
+		if(flag==1){
+		 var data  = hour+":"+second+"-"+day;
+		console.log(data)
+ 			hidden();
+			flag=0;
+			callBackfunc(data);
 		}
-		var text = svgDoc.getElementById("text-"+index);
-		//选中 设置为白色
-		text.setAttribute("fill","#FFF");		
-	}	
-	var day="am"
-	//上午下午切换
-	function changeDay(d){
-		day=d;
-		var  titleDay = document.getElementById("title-day");
-		var  buttonDay = document.getElementById("button-day");
-		if(d=="am")	{		
-			buttonDay.setAttribute("class","button-day-am");
-			titleDay.innerText="上午";
-		}else{		
-			buttonDay.setAttribute("class","button-day-pm");
-			titleDay.innerText="下午";	}
-	}
-	
-	var svgDocSecond = document.getElementById("svg-time-second");
-	var svgDocHour = document.getElementById("svg-time-hour");
-		svgDocSecond.style.display="none" ;
- 	function complete(){
-	if(flag==0){
-		flag=1;
-		//表盘替换为分钟
-		svgDocHour.style.display="none" ;
-		svgDocSecond.style.display="block" ;	
-		//title显示蓝色变换
-		var headerTitle = document.getElementById("header-title");
-		headerTitle.setAttribute("class","time-header-sec");
-		//重设分钟
+		}
+		var callBackfunc;
+		var show = function(callBack){
+ 			second="00"
+		//初始化index数值为12
 		timeChange(12);
-		return;
-	}
-	//设置结束返回结果
-	if(flag==1){
-		alert(hour+":"+second+"-"+day);
-		hidden();
-		flag=0;
-	}
-	}
-	
-	
-	function show(){
-	document.getElementById("bg").style.display ="block"; 
-	document.getElementById("show").style.display ="block"; 
-	}
-	function hidden(){
-	document.getElementById("bg").style.display ="none"; 
-	document.getElementById("show").style.display ="none"; 
-	}
+		timeChangeSec(12);
+		textColor(12);
+		changeDay("am")
+		
+		//表盘替换为小时
+		svgDocHour.style.display="block" ;
+		svgDocSecond.style.display="none" ;	
+		document.getElementById("bg").style.display ="block"; 
+		document.getElementById("show").style.display ="block"; 
+
+		callBackfunc=callBack;
+		}
+		var hidden = function(){
+		document.getElementById("bg").style.display ="none"; 
+		document.getElementById("show").style.display ="none"; 
+		}
+		exports.init = show;
+		exports.complete = complete; 
+		exports.changeDay = changeDay; 
+		exports.timeChange = timeChange; 
 	 
+	})(TimeSelecter);
+
+	function callback(data){
+	alert(data)
+	}
  </script>  
  </body>
 </html>

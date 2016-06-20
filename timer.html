@@ -242,7 +242,7 @@ overflow: hidden;">
 	//完成标志 0 未选择 1 小时已选择 
 	var flag=0;
 	//获取只针对象
- 	var svgArrow =document.getElementById("svg-time-arrow")
+ 	var svgArrow =document.getElementById("svg-time-arrow");
 	//获取时间对象
 	var titleHour = document.getElementById("title-hour");
 	var titleSec = document.getElementById("title-second");
@@ -271,9 +271,9 @@ overflow: hidden;">
 	function textColor(index){
 	var svgDoc;
 		if(flag==0){
-			svgDoc = document.getElementById("svg-time-hour")
+			svgDoc = document.getElementById("svg-time-hour");
 		}else{
-			svgDoc = document.getElementById("svg-time-second")
+			svgDoc = document.getElementById("svg-time-second");
 		}
 		//未选中均为蓝色
 		for(i=1;i<=12;i++){
@@ -297,9 +297,9 @@ overflow: hidden;">
 			titleDay.innerText="下午";	}
 	}
 	
-	var svgDocSecond = document.getElementById("svg-time-second")
-	var svgDocHour = document.getElementById("svg-time-hour")
-		svgDocSecond.style.display="none" 
+	var svgDocSecond = document.getElementById("svg-time-second");
+	var svgDocHour = document.getElementById("svg-time-hour");
+		svgDocSecond.style.display="none" ;
  	function complete(){
 	if(flag==0){
 		flag=1;
@@ -308,7 +308,7 @@ overflow: hidden;">
 		svgDocSecond.style.display="block" ;	
 		//title显示蓝色变换
 		var headerTitle = document.getElementById("header-title");
-		headerTitle.setAttribute("class","time-header-sec")
+		headerTitle.setAttribute("class","time-header-sec");
 		//重设分钟
 		timeChange(12);
 		return;
